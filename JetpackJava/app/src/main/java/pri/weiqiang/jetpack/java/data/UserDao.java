@@ -11,6 +11,7 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 public interface UserDao {
     @Insert(onConflict = REPLACE)
     void save(User user);
+
     @Query("SELECT * FROM user WHERE id = :userId")
     LiveData<User> load(int userId);
 }

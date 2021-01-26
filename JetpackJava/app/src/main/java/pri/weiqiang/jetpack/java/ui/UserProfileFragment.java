@@ -16,7 +16,7 @@ import pri.weiqiang.jetpack.java.data.User;
 import pri.weiqiang.jetpack.java.viewmodel.UserProfileViewModel;
 
 public class UserProfileFragment extends Fragment {
-    private String TAG = UserProfileFragment.class.getSimpleName();
+    private final String TAG = UserProfileFragment.class.getSimpleName();
     private static final String UID_KEY = "uid";
     private UserProfileViewModel viewModel;
 
@@ -29,7 +29,12 @@ public class UserProfileFragment extends Fragment {
         viewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                Log.w(TAG,"onChanged:"+user.getName());
+                if (user != null) {
+                    Log.w(TAG, "onChanged:" + user.getName());
+                } else {
+                    Log.w(TAG, "onChanged: user == null");
+                }
+
             }
         });
     }

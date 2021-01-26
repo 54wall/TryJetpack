@@ -1,21 +1,22 @@
 package pri.weiqiang.jetpack.java.api;
 
-import java.util.concurrent.Executor;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 import pri.weiqiang.jetpack.java.data.User;
 import pri.weiqiang.jetpack.java.data.UserDao;
+import pri.weiqiang.jetpack.java.data.UserDatabase;
 
 
 public class UserRepository {
 
     private final UserDao userDao;
-    private final Executor executor;
+    private LiveData<User> user;
 
-    public UserRepository(UserDao userDao, Executor executor) {
-        this.userDao = userDao;
-        this.executor = executor;
+    public UserRepository(Context context) {
+        UserDatabase db = Room.databaseBuilder(context, UserDatabase.class, "userprofile").build();
+        userDao = db.userDao();
     }
 
     public LiveData<User> getUser(int userId) {
@@ -25,20 +26,10 @@ public class UserRepository {
     }
 
     private void refreshUser(final int userId) {
-        // Runs in a background thread.
-/*        executor.execute(() -> {
-            // Check if user data was fetched recently.
-            boolean userExists = userDao.hasUser(FRESH_TIMEOUT);
-            if (!userExists) {
-                // Refreshes the data.
-                Response<User> response = webservice.getUser(userId).execute();
 
-                // Check for errors here.
+    }
 
-                // Updates the database. The LiveData object automatically
-                // refreshes, so we don't need to do anything else here.
-                userDao.save(response.body());
-            }
-        });*/
+    public void saveUser() {
+
     }
 }
