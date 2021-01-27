@@ -2,6 +2,8 @@ package pri.weiqiang.jetpack.java.viewmodel;
 
 import android.app.Application;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -11,11 +13,13 @@ import pri.weiqiang.jetpack.java.data.User;
 public class UserProfileViewModel extends AndroidViewModel {
     private int userId;
     private LiveData<User> user;
+    private LiveData<List<User>> userList;
     private final UserRepository userRepo;
 
     public UserProfileViewModel(@NonNull Application application) {
         super(application);
         userRepo = new UserRepository(application);
+        userList = userRepo.getUserList();
     }
 
     public void init(int userId) {
@@ -30,5 +34,13 @@ public class UserProfileViewModel extends AndroidViewModel {
 
     public LiveData<User> getUser() {
         return user;
+    }
+
+    public LiveData<List<User>> getUserList(){
+        return userList;
+    }
+
+    public void saveUser(User user){
+        userRepo.saveUser(user);
     }
 }
