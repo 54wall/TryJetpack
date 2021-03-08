@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import pri.weiqiang.jetpack.java.ui.UserProfileFragment;
+import pri.weiqiang.jetpack.java.ui.ZhihuFragment;
 
 public class MainActivity extends AppCompatActivity {
     private final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -15,7 +16,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UserProfileFragment modeFragment = new UserProfileFragment();
+//        UserProfileFragment modeFragment = new UserProfileFragment();
+        ZhihuFragment modeFragment = new ZhihuFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("uid", 0);
         modeFragment.setArguments(bundle);
