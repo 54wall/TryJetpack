@@ -16,7 +16,6 @@ public class Networks {
 
     private static CommonApi mCommonApi;
 
-    private static ThemeApi mThemeApi;
 
     private static Networks mNetworks;
 
@@ -32,17 +31,13 @@ public class Networks {
     }
 
 
-    public ThemeApi getThemeApi() {
-        return mThemeApi == null ? configRetrofit(ThemeApi.class) : mThemeApi;
-    }
-
     /*使用范型可以返回ThemeApi 或者 CommonApi不用每个都写一个方法*/
     private <T> T configRetrofit(Class<T> service) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.ZHIHU_BASE_URL)
                 .client(configClient())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//.addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .build();
         return retrofit.create(service);
     }

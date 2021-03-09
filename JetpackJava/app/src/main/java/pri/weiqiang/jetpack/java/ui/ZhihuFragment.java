@@ -31,7 +31,7 @@ public class ZhihuFragment extends Fragment {
         viewModel.getLatestDaily().observe(getViewLifecycleOwner(), new Observer<LatestDailyEntity>() {
             @Override
             public void onChanged(LatestDailyEntity latestDailyEntity) {
-                Log.w(TAG,"onChanged latestDailyEntity");
+                Log.w(TAG,"onChanged latestDailyEntity.getDate():"+latestDailyEntity.getDate());
                 updateLatestDaily(latestDailyEntity);
             }
         });
@@ -39,6 +39,7 @@ public class ZhihuFragment extends Fragment {
         binding.btnGetLatest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.w(TAG,"onClick ");
                 viewModel.updateLatestDailyList();
             }
         });
