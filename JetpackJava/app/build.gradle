@@ -32,9 +32,9 @@ android {
         dataBinding = true
     }
 
-//    dataBinding{
-//        enabled = true
-//    }
+    dataBinding{
+        enabled = true
+    }
 
 }
 

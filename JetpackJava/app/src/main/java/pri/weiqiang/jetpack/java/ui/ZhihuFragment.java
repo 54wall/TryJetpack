@@ -11,11 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import pri.weiqiang.jetpack.java.R;
 import pri.weiqiang.jetpack.java.data.zhihu.LatestDailyEntity;
+import pri.weiqiang.jetpack.java.data.zhihu.StoriesEntity;
 import pri.weiqiang.jetpack.java.databinding.FragmentZhihuBinding;
+import pri.weiqiang.jetpack.java.ui.adapter.StoryAdapter;
 import pri.weiqiang.jetpack.java.viewmodel.ZhihuViewModel;
 
 public class ZhihuFragment extends Fragment {
@@ -24,6 +30,9 @@ public class ZhihuFragment extends Fragment {
 
     private ZhihuViewModel viewModel;
     private FragmentZhihuBinding binding;
+    private List<StoriesEntity> entities;
+    private StoryAdapter storyAdapter;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -33,6 +42,7 @@ public class ZhihuFragment extends Fragment {
             public void onChanged(LatestDailyEntity latestDailyEntity) {
                 Log.w(TAG,"onChanged latestDailyEntity.getDate():"+latestDailyEntity.getDate());
                 updateLatestDaily(latestDailyEntity);
+
             }
         });
 
@@ -43,10 +53,23 @@ public class ZhihuFragment extends Fragment {
                 viewModel.updateLatestDailyList();
             }
         });
+
+        entities = new ArrayList<>();
+        storyAdapter = new StoryAdapter(entities);
+        binding.rvStory.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvStory.setAdapter(storyAdapter);
+
+
     }
 
     private void updateLatestDaily(LatestDailyEntity latestDailyEntity) {
         binding.tvContent.setText(latestDailyEntity.getDate());
+        entities.clear();
+        entities.addAll(latestDailyEntity.getStories());
+        Log.w(TAG,"entities.size():"+entities.size());
+        storyAdapter.notifyDataSetChanged();
+
+
     }
 
     @Override
